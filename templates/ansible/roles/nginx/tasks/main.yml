@@ -1,0 +1,38 @@
+---
+- name: Remove html folder
+  ansible.builtin.file:
+  state: absent
+  path: /var/www/html
+
+- name: Create empty html folder
+  ansible.builtin.file:
+  state: directory
+  path: /var/www/html
+  mode: '0755'
+  owner: ubuntu
+  group: ubuntu
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Start and enable Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Copy index.html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'
+
+- name: Copy nginx config
+  template:
+    src: config.j2
+    dest: /etc/nginx/conf.d/main.conf
+    mode: '0644'
+  notify: 
+    - Restart Nginx

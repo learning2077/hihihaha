@@ -1,0 +1,8 @@
+[ubuntu]
+ubuntu
+
+[arch]
+
+
+[all:vars]
+ansible_ssh_common_args=-F ./ssh_config

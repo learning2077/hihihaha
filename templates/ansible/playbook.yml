@@ -1,0 +1,6 @@
+---
+- name: Configure nginx
+  hosts: ubuntu             # target host
+  roles:                    # roles to execute
+    - nginx
+  become: yes               # become - run with sudo
